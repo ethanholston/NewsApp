@@ -41,14 +41,18 @@ app.get("/all", function(req, res) {
 // Scrape data from one site and place it into the mongodb db
 app.get("/scrape", function(req, res) {
   // Make a request via axios for the news section of `ycombinator`
-  axios.get("https://news.ycombinator.com/").then(function(response) {
+  axios.get("https://www.politico.com/").then(function(response) {
     // Load the html body from axios into cheerio
+    // console.log(response.data);
     var $ = cheerio.load(response.data);
     // For each element with a "title" class
-    $(".title").each(function(i, element) {
+    // console.log($(".cd__headline").children())
+    $("h1.headline").each(function(i, element) {
       // Save the text and href of each link enclosed in the current element
       var title = $(element).children("a").text();
+      console.log(title);
       var link = $(element).children("a").attr("href");
+      console.log(link);
 
       // If this found element had both a title and a link
       if (title && link) {
